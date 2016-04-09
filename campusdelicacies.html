@@ -53,7 +53,7 @@
 <!-- rentinfo start -->
 
             <!-- sidebar -->
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar-search" role="navigation">
+            <div class="col-xs-4 col-sm-2 sidebar-offcanvas" id="sidebar-search" role="navigation">
                <form role="form" id="formSearch">
                   <div class="sidebar-left well sidebar-nav">
                      <div class="form-group">
@@ -93,28 +93,29 @@
                         </div>
                      </fieldset>
 
-                     <div id = "showSent">
-                           <h3><a>25000元</a></h3>
-                     </div>
-                     <input id="rentBar" type="range" min="1500" max="50000" value="25000" step="500"></input>
-
                      </br>
 
                      <br></br>
-                     <button type="button" class="btn btn-success" id="serch" onClick="getSchoolInfo();" ><h2>搜尋</h2></button>
+                     <button type="button" class="btn btn-success" id="serch" onClick="getCampusInfo();" ><h2>篩選</h2></button>
                   </div>
                   <!--/.well -->
                   <div class="sidebar-left well sidebar-nav" >
                      <ul class="nav">
                         <div class="form-group" id="houseButton">
                            <label for="exampleInputPassword1">房屋種類</label>
-                           <div data-toggle="buttons-checkbox" class = "row">
-                              <button type="button"  value="1" class="btn btn-default" onClick="Add_ObjectType('houseType',1);">公寓</button>
-                              <button type="button"  value="2" class="btn btn-default" onClick="Add_ObjectType('houseType',2);">學舍</button>
-                              <button type="button"  value="3" class="btn btn-default" onClick="Add_ObjectType('houseType',3);">透天</button>
-                              <button type="button"  value="4" class="btn btn-default" onClick="Add_ObjectType('houseType',4);">大樓</button>
+                           <div data-toggle="buttons-checkbox">
+                            <button type="button"  value="1" class="btn btn-default" onClick="Add_ObjectType('houseType',1);">餐盒業</button>
+                            <button type="button"  value="2" class="btn btn-default" onClick="Add_ObjectType('houseType',2);">觀光飯店附設宴席餐廳</button>
+                            <button type="button"  value="3" class="btn btn-default" onClick="Add_ObjectType('houseType',3);">一般餐飲業</button>
                            </div>
+                           <br>
+                           <label for="exampleInputPassword2">支付方式</label>
+                           <div data-toggle="buttons-checkbox">
+                           <button type="button"  value="5" class="btn btn-default" onClick="Add_ObjectType('houseType',5);">刷卡</button>
+                          </div>
                         </div>
+
+
                         <input class="form-control" type="text" placeholder="請點選搜尋類別" id="houseType" name="houseType" style = "display:none">
 
                      </ul>
@@ -123,12 +124,12 @@
                </form>
             </div>
             <!--/sidebar-->
-            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar-sirections" role="navigation" style="display:none;">
+            <div class="col-xs-4 col-sm-3 sidebar-offcanvas" id="sidebar-sirections" role="navigation" style="display:none;">
             </div>
 <!-- rentinfo end -->
 <!-- container start-->
    <script type="text/javascript"> var pages = 2;</script>
-      <div class="col-xs-10 col-sm-7" id="map-content">
+      <div class="col-xs-12 col-sm-8" id="map-content">
          <div id="map-canvas"></div>
 
          <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -138,7 +139,7 @@
             </div>
          </div>
       </div>
-    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar-search" role="navigation">
+    <div class="col-xs-3 col-sm-2 sidebar-offcanvas" id="sidebar-search" role="navigation">
         <form role="form" id="formSearch">
             <div class="sidebar-right well sidebar-nav">
                     <div class="form-group">

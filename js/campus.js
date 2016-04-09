@@ -1,33 +1,10 @@
-// 更動Campus頁面
-console.log(pages);
-if (pages == 2) {
-
-    document.getElementById("showSent").remove();
-    document.getElementById("rentBar").remove();
-    $('#houseButton').find('label').html('餐廳種類')
-    .next().html(
-       '<button type="button"  value="1" class="btn btn-default" onClick="Add_ObjectType(\'houseType\',1);">餐盒業</button>'
-       +'<button type="button"  value="2" class="btn btn-default" onClick="Add_ObjectType(\'houseType\',2);">觀光飯店附設宴席餐廳</button>'
-       +'<button type="button"  value="3" class="btn btn-default" onClick="Add_ObjectType(\'houseType\',3);">一般餐飲業</button>'
-       )
-    .after(
-       '<br><label for="exampleInputPassword2">支付方式</label>'
-       +'<div data-toggle="buttons-checkbox" class = "row">'
-       +'<button type="button"  value="5" class="btn btn-default" onClick="Add_ObjectType(\'houseType\',5);">刷卡</button>'
-       +'</div>'
-       );
-    var temp = document.getElementById("serch");
-    temp.onclick = getCampusInfo;
-    temp.innerHTML = "<h2>篩選</h2>";
-}
-
 /*
     Function Name : getCampusInfo()
     Function Work : 取得e點靈資料
 
     API 呼叫網址：http://140.130.34.31/api.php?action=restaurantlist&school=學校名稱
-    */
-    function getCampusInfo() {
+*/
+function getCampusInfo() {
     //alert('(σ" 。 。)σ');
     var School = document.getElementById("selectArea").value;
     var URLs = HousingURL + "api.php?action=restaurantlist&school=";
@@ -102,7 +79,6 @@ function loadingCampusData(URLs,School,cschool){
                         }
                     }
                 }
-
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert("getCampusInfo , error ! ");
@@ -122,7 +98,7 @@ function RestaurantType(type) {
 function FilterMapCampus(objecjType) {
 
     numbers = objecjType.split(",");
-
+    console.log(numbers);
 //分離object裡 現金與刷卡的值，使得numbers長度不變。
 var pays = false;
 for(var i = 0 ; i < numbers.length ; i++) {
@@ -154,7 +130,7 @@ for (var i = 0; i < campus_arr.length; i++) {
                     break;
                 }
             }
-            console.log(pays);
+
             if(pays) {
                 if(checkPay && checkType) {
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
@@ -166,14 +142,18 @@ for (var i = 0; i < campus_arr.length; i++) {
                 }
             }
         }
-        if($('#selectArea option:selected').text() != "不分類"){
-            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
-        }
-        else{
-            for(var k = 0; k < School_arr.length; k++){
-                campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
-            }
-        }
-        if(numbers.length == 1) getCampusInfo();
-        else markerCluster = new MarkerClusterer(map, markers);
+
+    if(numbers.length == 1) getCampusInfo();
+    else markerCluster = new MarkerClusterer(map, markers);
+
+    if($('#selectArea option:selected').text() != "不分類"){
+        campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
     }
+    else{
+        for(var k = 0; k < School_arr.length; k++){
+            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
+        }
+    }
+
+
+}
