@@ -1,16 +1,12 @@
-<?php 
- header("Access-Control-Allow-Origin: http://localhost ");
-   // header("Content-Type: application/json");
- ?>
 <html>
    <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
       <meta charset="utf-8">
-      <base href="<?php //echo base_url();?>">
+
       <!-- css 檔案連結 -->
-      <link rel="stylesheet" type="text/css" href="<?=base_url("css/bootstrap.css")?>" />
-      <link rel="stylesheet" type="text/css" href="<?=base_url("css/main.css")?>" />
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+      <link rel="stylesheet" type="text/css" href="css/main.css" />
       <!-- <script src="js/bootstrap-checkbox.js"/> -->
       <!-- <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap-checkbox.css"> -->
       <!-- javascript 檔案連結 -->
@@ -26,7 +22,7 @@
          <div class="container">
             <div class="navbar-header">
 
-                     <img class="top-logo" src="<?=base_url("img/Header.png")?>"/>
+                     <img class="top-logo" src="img/Header.png"/>
                              <!--目錄-->
                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                   <span class="sr-only">Toggle navigation</span>
@@ -45,9 +41,9 @@
 
             <div class="navbar-collapse collapse">
                <ul class="nav navbar-nav navbar-right">
-                  <li><a class=""href="<?php echo base_url();?>">租屋資訊</a></li>
-                  <li><a class=""href="<?php echo base_url('campus');?>">生活一點靈</a></li>
-                  <li><a class=""href="<?php echo base_url('security');?>">安全專區</a></li>
+                  <li><a class=""href="">租屋資訊</a></li>
+                  <li><a class=""href="campusdelicacies.html">生活一點靈</a></li>
+                  <li><a class=""href="securities.html">安全專區</a></li>
                </ul>
             </div>
          </div>
