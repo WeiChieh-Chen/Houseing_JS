@@ -92,7 +92,9 @@ $(document).ready(function() {
                             GetBranch(arr_count);
                         },
                         error:function(){
-                            console.log("not found")
+                            console.log("not found");
+                            $('#selectToggle').attr('disabled', true);
+                            $('#selectArea').html("<option value=''>無資料</option>");
                         }
                     })
                 }
@@ -108,7 +110,7 @@ $(document).ready(function() {
         });
     });
 });
-
+}
 /*
     Function Name : getSchoolInfo()
     Function Work : 取得房屋資料 
@@ -153,6 +155,7 @@ function GetBranch(count)//做分局的部分。並去除重複部分
     $('#selectArea').html(strHtml);
 
 }
+
 var dept;
 function Getlatlng()
 {
@@ -377,4 +380,4 @@ function Add_ObjectType(tagId, typename) {
     }*/
 
 }
-}
+
