@@ -79,10 +79,13 @@ function loadingCampusData(URLs,School,cschool){
                         }
                     }
                 }
+
+                makeRightSB(pages);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert("getCampusInfo , error ! ");
             }
+
         });
 }
 

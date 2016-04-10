@@ -102,6 +102,7 @@ function getSchoolInfo() {
         }
     }
 }
+var tmp = 0;
 function loadingHousingData(URLs,School,cschool){
 
         console.log(URLs);
@@ -149,7 +150,7 @@ function loadingHousingData(URLs,School,cschool){
 
                 });
 
-                var tmp = 0;
+
                 for (var i = 0; i < School_arr.length; i++) {
                     //console.log(School_arr[i]["ename"]);
                     if (School_arr[i]["ename"] == School) {
@@ -290,12 +291,11 @@ function createMarkers(houseiD, address, lat, lon) {
     });
     //標記資訊視窗點擊事件
     var strplace = address + "<br>";
-    infowindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
     google.maps.event.addListener(marker, 'click', function() {
 
-        infowindow.setContent(createPopUpHtml(houseiD));
-
-        infowindow.open(map, marker);
+        infoWindow.setContent(createPopUpHtml(houseiD));
+        infoWindow.open(map, marker);
     });
 
     markers.push(marker);
@@ -324,7 +324,7 @@ function deleteMarkers() {
 
 function bindInfoWindow(marker, map, infoWindow, html) {
     google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(html);
+        infoWindow.setContent(html);
         infoWindow.open(map, marker);
     });
 }
@@ -528,3 +528,30 @@ function housestatistics(cost,type,school) {
 
         });
     }
+
+function makeRightSB(page) {
+    if(page == 2) {
+        var size = campus_arr.length;
+        var str = "<ul class=list-group>"
+                +"<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
+        for(var i = 0 ; i < size ; i++) {
+            str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
+                +  campus_arr[i]['name']
+                + "</button>";
+        }
+        str += "</ul>";
+        document.getElementById("sidebar-right").innerHTML = str;
+
+        for(var i = 0 ; i < size ; i++) {
+            document.getElementById("list_"+i).addEventListener("click",function(){
+                var k = this.value;
+                // alert(k);
+                map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
+                infoWindow.setContent(createPopUpHtml(k));
+                infoWindow.open(map, markers[k]);
+            });
+        }
+    }
+}
+
+
