@@ -1,20 +1,14 @@
 // 更動securities頁面
-
+var Branch_arr = new Array;
+var Crime_arr = new Array;
+var security_count=0;
+var Crime_count = 0;
 if (pages == 3) {
 
-    $('#showSent').remove();
-    $('#rentBar').remove();
-    $('#houseButton').remove();
-    $('div').removeClass("sidebar-left well sidebar-nav");
 
-    $('#selectToggle').find('label').html('警察分局');
-    $('#selectArea').find('option').html('請選擇警察分局');
-    $("#serch").attr("onClick","Getlatlng()").html("<h2>篩選</h2>");
-    
 
-var HousingURL = "http://140.130.34.31/";
 
-var security_arr = new Array;
+
 var comp=new Array;
 var addr_arr = new Array;
 var Latlng_arr = new Array;
@@ -23,6 +17,7 @@ var arr_count;
 var CCity;
 var glo_count;
 var police_count;
+
 var dept;
 
 
@@ -150,11 +145,13 @@ function Getlatlng()
             Latlng_arr[val] = new Array();
             console.log(addr_arr[j]['Address']);
             Latlng_arr[val]['DeptNm'] = addr_arr[j]['DeptNm'];
+            Latlng_arr[val]['BranchNm'] = addr_arr[j]['BranchNm'];
             Latlng_arr[val++]['Address'] = addr_arr[j]['Address'];
         }
 
     }
-    $.ajax({
+        Crime_count = 0;
+    $.ajax({//處理案發現場位置
         url:"public/Latlng.json",
         type:"POST",
         dataType:"json",
@@ -166,7 +163,8 @@ function Getlatlng()
                 {
                     if( result[i].Address.match(Latlng_arr[x]['Address']) ){
                         SetPopMap(result[i].Address,result[i].Lat,result[i].Lng,false);
-                        console.log(Latlng_arr[x]['Address']);
+                        CrimeSave(result[i].Address,result[i].Lat,result[i].Lng);
+                       
                     }
                 }
             })
@@ -175,9 +173,9 @@ function Getlatlng()
         error:function() {
             console.log("Not found!!!");
         }
-    })
-
-        $.ajax({
+    });
+    security_count=0;
+        $.ajax({//處理警局位置
             url:"public/police_department.json",
             type:"POST",
             dataType:"json",
@@ -185,24 +183,76 @@ function Getlatlng()
 
             success:function(result) {
                 $(result).each(function(i){
-                    
-                    if( result[i].BranchNm==branch ){
-                        console.log(result[i].BranchNm);
+                    if(branch == "不分類")
+                    {
+                        for(var x = 0 ; x < val ; x++)
+                        {
+                            if( result[i].BranchNm==Latlng_arr[x]['BranchNm'] ){
+                                console.log(result[i].BranchNm);
+                                dept = Latlng_arr[0]['DeptNm'];
+                                
+                                SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
+                                Latlng_arr[x]['BranchNm'] ="0";//讓上面if不會重複判斷同個分局
+                                BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,false);  
+                                break;
+                            }
+                        }
+                    }else if( result[i].BranchNm==branch){
+                        console.log("result ="+result[i].BranchNm);
                         dept = Latlng_arr[0]['DeptNm'];
-                        security_arr[i]=new Array;
-                        security_arr[i]['lat']=result[i].Lat;
-                        security_arr[i]['lng']=result[i].Lng;
-                       SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
+                        
+                        SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
+                        BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,true);                   
                     }
-                    
+                        
+                                     
                 })
                     
             },
             error:function() {
                 console.log("Not found!!!");
             }
+        });
+        
+        $(function(){
+        setTimeout(function(){
+         makeRightSB(pages);
+        },500)
         })
-    // }
+   
+}
+
+function BranchSave(bran,lat,lng,branch_flag)
+{
+    if(branch_flag)
+    {
+        Branch_arr[security_count]=new Array;
+        Branch_arr[0]['BranchNm'] = bran;
+        Branch_arr[security_count]['Branch_lat']=lat;
+        Branch_arr[security_count++]['Branch_lng']=lng;
+        console.log("security_count="+security_count);
+    }else{
+
+        Branch_arr[security_count]=new Array;
+        Branch_arr[security_count]['BranchNm'] =bran;
+        Branch_arr[security_count]['Branch_lat']=lat;
+        Branch_arr[security_count++]['Branch_lng']=lng;
+    }
+
+    
+}
+
+
+
+function CrimeSave(Address,lat,lng)
+{
+    console.log("安123安 "+Crime_count);
+    Crime_arr[Crime_count] = new Array;
+    Crime_arr[Crime_count]['Address'] = Address;
+    Crime_arr[Crime_count]['lat'] = lat;
+    Crime_arr[Crime_count++]['lng'] = lng;
+    
+
 }
 
 function SetPopMap(addr,s_lat, s_lon,po) {

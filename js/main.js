@@ -167,6 +167,7 @@ function loadingHousingData(URLs,School,cschool){
                     console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
                 }
                 makeRightSB(pages);
+
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert("getSchoolInfo , error ! ");
@@ -360,6 +361,14 @@ function createPopUpHtml(houseiD) {
         + "<div class='MarkerType'>地址: " + campus_arr[houseiD]["address"] + "</div>"
         + "<div class='MarkerType'>營業時間: " + campus_arr[houseiD]["open"] + "</div>"
         + "<div class='MarkerType'>電話: " + campus_arr[houseiD]["phone"] + "</div>"
+        + "<button class='btn btn-primary' href='" + URLsC + "' data-toggle='modal' data-target='#myModal'>詳細資訊</button>" + "</div>";
+    }else if(pages == 3) {
+        return "<div class='MarkerPopUp'><div class='MarkerTitle'>"
+        + "</div>"
+        + "<div class='MarkerContext'>" + "</div>"
+        + "<div class='rating-static rating-" + "'></div>"
+        + "<div class='MarkerType'>犯罪地點: " + Crime_arr[houseiD]["Address"] + "</div>"
+        + "<div class='MarkerType'>管轄分局: " + Branch_arr[houseiD]["BranchNm"] + "</div>"
         + "<button class='btn btn-primary' href='" + URLsC + "' data-toggle='modal' data-target='#myModal'>詳細資訊</button>" + "</div>";
     }
 }
@@ -556,10 +565,12 @@ function makeRightSB(page) {
             focus(size);
         break;
         case 3:
-            size = addr_arr.length;
+
+            size = Crime_count;
+            console.log("SIZE:"+size);
             for(var i = 0 ; i < size ; i++) {
                 str +=  "<button id=slist_"+i+" value="+i+" class=list-group-item>"
-                    +  addr_arr[i]['Address']
+                    + "<p>地點:" +Crime_arr[i]['Address']+"</p>"                    
                     + "</button>";
             }
             str += "</ul>";
@@ -596,7 +607,7 @@ function focus(size) {
         for(var i = 0 ; i < size ; i++) {
             document.getElementById("slist_"+i).addEventListener("click",function(){
                 var k = this.value;
-                map.setCenter(new google.maps.LatLng(security_arr[k]['lat'],security_arr[k]['lon']));
+                map.setCenter(new google.maps.LatLng(Crime_arr[k]['lat'],Crime_arr[k]['lng']));
                 infoWindow.setContent(createPopUpHtml(k));
                 infoWindow.open(map, markers[k]);
             });

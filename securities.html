@@ -86,40 +86,19 @@
                      </div>
                      <fieldset id="selectToggle" disabled>
                         <div class="form-group">
-                           <label for="area">學校</label>
+                           <label for="area">警察分局</label>
                            <select class="form-control" id="selectArea" name="selectArea">
-                              <option value="">請選擇學校</option>
+                              <option value="">請選擇分局</option>
                            </select>
                         </div>
                      </fieldset>
 
-                     <div id = "showSent">
-                           <h3><a>25000元</a></h3>
-                     </div>
-                     <input id="rentBar" type="range" min="1500" max="50000" value="25000" step="500"></input>
-
                      </br>
 
                      <br></br>
-                     <button type="button" class="btn btn-success" id="serch" onClick="getSchoolInfo();" ><h2>搜尋</h2></button>
+                     <button type="button" class="btn btn-success" id="serch" onClick="Getlatlng();"><h2>篩選</h2></button>
                   </div>
-                  <!--/.well -->
-                  <div class="sidebar-left well sidebar-nav" >
-                     <ul class="nav">
-                        <div class="form-group" id="houseButton">
-                           <label for="exampleInputPassword1">房屋種類</label>
-                           <div data-toggle="buttons-checkbox" class = "row">
-                              <button type="button"  value="1" class="btn btn-default" onClick="Add_ObjectType('houseType',1);">公寓</button>
-                              <button type="button"  value="2" class="btn btn-default" onClick="Add_ObjectType('houseType',2);">學舍</button>
-                              <button type="button"  value="3" class="btn btn-default" onClick="Add_ObjectType('houseType',3);">透天</button>
-                              <button type="button"  value="4" class="btn btn-default" onClick="Add_ObjectType('houseType',4);">大樓</button>
-                           </div>
-                        </div>
-                        <input class="form-control" type="text" placeholder="請點選搜尋類別" id="houseType" name="houseType" style = "display:none">
 
-                     </ul>
-                  </div>
-                  <!--/.well -->
                </form>
             </div>
             <!--/sidebar-->
