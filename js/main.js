@@ -395,7 +395,7 @@ function Add_ObjectType(tagId, typename) {
  *************************************************/
 function housestatistics(cost,type,school) {
     console.log("work");
-        var URL = "welcome/statistics";
+        var URL = 'Welcome.php';
 
         var dataText =
         {
@@ -413,7 +413,7 @@ function housestatistics(cost,type,school) {
             url:URL,
             cache: false,
             data:dataText,
-            dataType:'text',
+            dataType:'html',
             type:"POST",
 
 
@@ -433,7 +433,7 @@ function housestatistics(cost,type,school) {
 
     }
     function campusstatistics(pay,type,school) {
-            var URL = "campus/statistics"
+            var URL = 'Campus.php'
             if(pay == "刷卡"){
                 var dataText =
                 {
@@ -464,7 +464,7 @@ function housestatistics(cost,type,school) {
                 url:URL,
                 cache: false,
                 data:dataText,
-                dataType:'text',
+                dataType:'html',
                 type:"POST",
 
 
@@ -483,7 +483,7 @@ function housestatistics(cost,type,school) {
             });
         }
     function securitystatistics(branchNm) {
-        var URL = "security/statistics";
+        var URL = 'Security.php';
         if($('#selectArea option:selected ').text() == "不分類"){
             var dataText =
             {
@@ -510,7 +510,7 @@ function housestatistics(cost,type,school) {
             url:URL,
             cache: false,
             data:dataText,
-            dataType:'text',
+            dataType:'html',
             type:"POST",
 
 
