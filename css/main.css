@@ -26,7 +26,7 @@ h6, .h6 {
 .navbar{
 	margin-bottom: 0px;
 }
-.navbar-brand{ 
+.navbar-brand{
   height: 92px;
 }
 .container .text-muted {
@@ -77,13 +77,13 @@ h6, .h6 {
 
 .navbar-nav ul li a{padding:11px;display:block; font-size:16px;}
 .navbar-nav ul li{padding:0;}
-.navbar-default .navbar-nav > .open > a, 
-.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus{
   background: #2cd190;
   color:#FFF;
 }
-.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #FFF;
   background-color: transparent;
@@ -105,7 +105,7 @@ h6, .h6 {
 /* Off Canvas
 --------------------------------------------------*/
 @media screen and (min-width: 768px) and (max-width: 1000px) {
-  .navbar-brand{ 
+  .navbar-brand{
    display : none;
   }
 }
@@ -114,7 +114,7 @@ h6, .h6 {
   .top-logo{
   height: 40px;
 }
-.navbar-brand{ 
+.navbar-brand{
   height: 48px;
 }
   .row-offcanvas {
@@ -184,12 +184,12 @@ h6, .h6 {
   width: 100%;
   top: 0;
   height: 100%;
-  display: table;  
-  transition: opacity .25s ease-in-out, background .25s ease-in-out;  
-  -moz-transition: opacity .25s ease-in-out, background .25s ease-in-out;  
-  -webkit-transition: opacity .25s ease-in-out, background .25s ease-in-out;  
+  display: table;
+  transition: opacity .25s ease-in-out, background .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out, background .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out, background .25s ease-in-out;
   color: #fff;
-  font-size: 20px; 
+  font-size: 20px;
 }
 .bulletin .context h1,h2,h3,h4{
   color: #fff;
@@ -215,7 +215,7 @@ h6, .h6 {
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
-} 
+}
 .bulletin .main .thumbnail img.portrait {
   width: 100%;
   height: auto;
@@ -236,7 +236,7 @@ h6, .h6 {
     background: #2cd190;
     overflow:hidden;
 }
- 
+
 .caption {
     position:absolute;
     top:0;
@@ -329,7 +329,7 @@ h6, .h6 {
 .rating-5 { background-position: -24px -16px; }
 .rating-6 { background-position: -24px 0; }
 .rating-7 { background-position: -12px -16px; }
-.rating-8 { background-position: -12px 0; } 
+.rating-8 { background-position: -12px 0; }
 .rating-9 { background-position: 0 -16px; }
 .rating-10 { background-position: 0 0; }
 /*#myModal {
@@ -339,3 +339,8 @@ h6, .h6 {
     margin-top: -350px;
     padding: 20px;
     }*/
+
+.over {
+    overflow: auto;
+    height: 88%;
+}

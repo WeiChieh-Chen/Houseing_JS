@@ -331,7 +331,7 @@ function bindInfoWindow(marker, map, infoWindow, html) {
 
 function createPopUpHtml(houseiD) {
 
-    var URLsC = "welcome/show_photograph/";
+    var URLsC = "photograph.html";
     houseNo = houseiD;
     if(pages == 1) {
         return "<div class='MarkerPopUp'><div class='MarkerTitle'>"
@@ -361,7 +361,6 @@ function createPopUpHtml(houseiD) {
         + "<div class='MarkerType'>營業時間: " + campus_arr[houseiD]["open"] + "</div>"
         + "<div class='MarkerType'>電話: " + campus_arr[houseiD]["phone"] + "</div>"
         + "<button class='btn btn-primary' href='" + URLsC + "' data-toggle='modal' data-target='#myModal'>詳細資訊</button>" + "</div>";
-
     }
 }
 function showHouseInfo(id) {
@@ -416,7 +415,6 @@ function housestatistics(cost,type,school) {
             dataType:'text',
             type:"POST",
 
-
             success: function(response)
             {
                 // alert("work");
@@ -466,8 +464,6 @@ function housestatistics(cost,type,school) {
                 data:dataText,
                 dataType:'text',
                 type:"POST",
-
-
                 success: function(response)
                 {
                     // alert("work");
@@ -504,7 +500,6 @@ function housestatistics(cost,type,school) {
             };
         }
         console.log(dataText);
-
         $.ajax(
         {
             url:URL,
@@ -512,33 +507,28 @@ function housestatistics(cost,type,school) {
             data:dataText,
             dataType:'text',
             type:"POST",
-
-
             success: function(response)
             {
                 // alert("work");
             },
-
             error:  function(xhr, ajaxOptions, thrownError)
             {
             // alert("error");
             // alert(xhr.status);
             // alert(thrownError);
             }
-
         });
     }
 
 function makeRightSB(page) {
-    var size;
-    var str = "<ul class=list-group>"
-            + "<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
+    var size = 0;
+    var str = "";
     switch (page)
     {
         case 1:
             size = house_arr.length;
             for(var i = 0 ; i < size ; i++) {
-                str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
+                str +=  "<button id=hlist_"+i+" value="+i+" class=list-group-item>"
                     +   "<p>"+house_arr[i]['address']+"</p>"
                     +   "<p>"+house_arr[i]['type']+"</p>"
                     +   "<p>"+house_arr[i]['room']+"</p>"
@@ -550,32 +540,67 @@ function makeRightSB(page) {
             }
             str += "</ul>";
             document.getElementById("house_RSB").innerHTML = str;
+            focus(size);
         break;
         case 2:
             size = campus_arr.length;
+            str = "<ul class=list-group>"
+                + "<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
             for(var i = 0 ; i < size ; i++) {
-                str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
+                str +=  "<button id=clist_"+i+" value="+i+" class=list-group-item>"
                     +  campus_arr[i]['name']
                     + "</button>";
             }
             str += "</ul>";
             document.getElementById("campus_RSB").innerHTML = str;
+            focus(size);
         break;
         case 3:
+            size = addr_arr.length;
+            for(var i = 0 ; i < size ; i++) {
+                str +=  "<button id=slist_"+i+" value="+i+" class=list-group-item>"
+                    +  addr_arr[i]['Address']
+                    + "</button>";
+            }
+            str += "</ul>";
+            document.getElementById("security_RSB").innerHTML = str;
+            focus(size);
         break;
-
-    }
-
-
-    for(var i = 0 ; i < size ; i++) {
-        document.getElementById("list_"+i).addEventListener("click",function(){
-            var k = this.value;
-
-            map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
-            infoWindow.setContent(createPopUpHtml(k));
-            infoWindow.open(map, markers[k]);
-        });
     }
 }
 
-
+function focus(size) {
+    switch (pages)
+    {
+        case 1:
+        for(var i = 0 ; i < size ; i++) {
+            document.getElementById("hlist_"+i).addEventListener("click",function(){
+                var k = this.value;
+                map.setCenter(new google.maps.LatLng(house_arr[k]['lat'],house_arr[k]['lon']));
+                infoWindow.setContent(createPopUpHtml(k));
+                infoWindow.open(map, markers[k]);
+            });
+        }
+        break;
+        case 2:
+        for(var i = 0 ; i < size ; i++) {
+            document.getElementById("clist_"+i).addEventListener("click",function(){
+                var k = this.value;
+                map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
+                infoWindow.setContent(createPopUpHtml(k));
+                infoWindow.open(map, markers[k]);
+            });
+        }
+        break;
+        case 3:
+        for(var i = 0 ; i < size ; i++) {
+            document.getElementById("slist_"+i).addEventListener("click",function(){
+                var k = this.value;
+                map.setCenter(new google.maps.LatLng(security_arr[k]['lat'],security_arr[k]['lon']));
+                infoWindow.setContent(createPopUpHtml(k));
+                infoWindow.open(map, markers[k]);
+            });
+        }
+        break;
+    }
+}

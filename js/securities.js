@@ -12,40 +12,20 @@ if (pages == 3) {
     $("#serch").attr("onClick","Getlatlng()").html("<h2>篩選</h2>");
     
 
-
-
 var HousingURL = "http://140.130.34.31/";
 
-var School_arr = new Array;
-var house_arr = new Array;
-var campus_arr = new Array;
+var security_arr = new Array;
+var comp=new Array;
 var addr_arr = new Array;
 var Latlng_arr = new Array;
 var police_arr = new Array;
-var infoWindow;
-var markers = []; // marker cluster
-var markerCluster;
-var houseNo;
-var Find_Schools_lat = 0;
-var Find_Schools_lon = 0;
-
 var arr_count;
 var CCity;
+var glo_count;
+var police_count;
+var dept;
 
-//var site_path=location.origin+"/bikelife/bikebook/";
-/* google map modal remove data */
-$(document.body).on('hidden.bs.modal', function() {
-    $('#myModal').removeData('bs.modal')
-});
-/*left silder toggle*/
-$(document).ready(function() {
-    $('[data-toggle=offcanvas]').click(function() {
-        $('.row-offcanvas').toggleClass('active');
-    });
-});
 
-/* 連動Select */
-//house_tpye1
 $(document).ready(function() {
     $('#selectCity').change(function() {
         var CNo = $('#selectCity').val();
@@ -111,14 +91,8 @@ $(document).ready(function() {
     });
 });
 }
-/*
-    Function Name : getSchoolInfo()
-    Function Work : 取得房屋資料 
 
-    API 呼叫網址：http://140.130.34.31/api.php?action=houselist&school=學校名稱
-*/
-var glo_count;var police_count;
-var comp=new Array;
+
 function GetBranch(count)//做分局的部分。並去除重複部分
 {
     glo_count = count;
@@ -134,7 +108,6 @@ function GetBranch(count)//做分局的部分。並去除重複部分
 
         for(var j = 0 ; j < comp.length && flag; j++ )
         {
-
             if( comp[j] == addr_arr[i]['BranchNm'] )
             {
                 flag = false;
@@ -156,7 +129,7 @@ function GetBranch(count)//做分局的部分。並去除重複部分
 
 }
 
-var dept;
+
 function Getlatlng()
 {
     if (markerCluster) {
@@ -192,7 +165,8 @@ function Getlatlng()
                 for(var x = 0 ;x < val ; x++ )
                 {
                     if( result[i].Address.match(Latlng_arr[x]['Address']) ){
-                        SetMap(result[i].Address,result[i].Lat,result[i].Lng,false);
+                        SetPopMap(result[i].Address,result[i].Lat,result[i].Lng,false);
+                        console.log(Latlng_arr[x]['Address']);
                     }
                 }
             })
@@ -202,33 +176,7 @@ function Getlatlng()
             console.log("Not found!!!");
         }
     })
-   /*if(branch == "不分類"){
-        $.ajax({
-        url:"public/police_department.json",
-        type:"POST",
-        dataType:"json",
-        catch:false,
 
-        success:function(result) {
-            $(result).each(function(i){
-                for(var x=0;x<police_count;x++)
-                {
-                    if( result[i].BranchNm.match(comp[x]) ){
-                        console.log(result[i].BranchNm);
-                        dept = Latlng_arr[0]['DeptNm'];
-                       SetMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
-                        break;
-                    }
-                }
-                
-            })
-                
-        },
-        error:function() {
-            console.log("Not found!!!");
-        }
-    })                 
-    }else{*/
         $.ajax({
             url:"public/police_department.json",
             type:"POST",
@@ -241,7 +189,10 @@ function Getlatlng()
                     if( result[i].BranchNm==branch ){
                         console.log(result[i].BranchNm);
                         dept = Latlng_arr[0]['DeptNm'];
-                       SetMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
+                        security_arr[i]=new Array;
+                        security_arr[i]['lat']=result[i].Lat;
+                        security_arr[i]['lng']=result[i].Lng;
+                       SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
                     }
                     
                 })
@@ -254,18 +205,8 @@ function Getlatlng()
     // }
 }
 
-function initialize() {
-    var mapOptions = {
-        zoom: 8,
-        center: new google.maps.LatLng(23.5989232, 121.0173463)
-    };
-    map1 = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-}
-
-function SetMap(addr,s_lat, s_lon,po) {
-    Find_Schools_lat = s_lat;
-    Find_Schools_lon = s_lon;
-    //setAllMap(null);
+function SetPopMap(addr,s_lat, s_lon,po) {
+   
     
     console.log("lat = " + s_lat + ", lon = " + s_lon + " flag =" + po);
     if(po)
@@ -281,7 +222,7 @@ function SetMap(addr,s_lat, s_lon,po) {
         };
     }
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    createMarkers(addr,s_lat,s_lon,po);
+    createPopMarkers(addr,s_lat,s_lon,po);
     stepDisplay = new google.maps.InfoWindow();
     
     markerCluster = new MarkerClusterer(map, markers);
@@ -289,7 +230,7 @@ function SetMap(addr,s_lat, s_lon,po) {
 }
 
 
-function createMarkers( address,lat, lon,po) {
+function createPopMarkers( address,lat, lon,po) {
     var point = new google.maps.LatLng(lat, lon);
     //  infoWindow = new google.maps.InfoWindow();
     if(po){
@@ -328,56 +269,4 @@ function createMarkers( address,lat, lon,po) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-/*Marker操作
- *************************************************/
-function setAllMap(map) {
-    markerCluster.addMarkers(markers);
-}
-
-function clearMarkers() {
-    markerCluster.clearMarkers();
-}
-
-function showMarkers() {
-    setAllMap(map);
-}
-
-function deleteMarkers() {
-    clearMarkers();
-    markers = [];
-}
-
-function bindInfoWindow(marker, map, infoWindow, html) {
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(html);
-        infoWindow.open(map, marker);
-    });
-}
-function showHouseInfo(id) {
-
-    $('#myModal').modal('show');
-
-}
-
-// /*類別複選功能*/
-function Add_ObjectType(tagId, typename) {
-    //objecjType 目的在抓一個藏起來的<TEXT>，而其記錄歷經所選項目。
-    var objecjType = document.getElementById(tagId);
-
-    //match  尋找匹配數字
-    if (objecjType.value.match(typename) != null) {
-        objecjType.value = objecjType.value.replace("," + typename, "");
-        console.log(objecjType.value);
-    } else {
-        objecjType.value += "," + typename;
-        console.log(objecjType.value);
-    }
-/*
-    if(pages == 1) {
-        FilterMap(objecjType.value);
-    }else if(pages == 2) {
-        FilterMapCampus(objecjType.value);
-    }*/
-
-}
 
