@@ -166,7 +166,7 @@ function loadingHousingData(URLs,School,cschool){
                     //alert("資料庫沒有內容");
                     console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
                 }
-
+                makeRightSB(pages);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert("getSchoolInfo , error ! ");
@@ -276,8 +276,8 @@ function FilterMap(objecjType) {
             }
         }
     }
-
-    markerCluster = new MarkerClusterer(map, markers);
+    if(numbers.length == 1) getSchoolInfo();
+    else markerCluster = new MarkerClusterer(map, markers);
 }
 
 function createMarkers(houseiD, address, lat, lon) {
@@ -530,27 +530,51 @@ function housestatistics(cost,type,school) {
     }
 
 function makeRightSB(page) {
-    if(page == 2) {
-        var size = campus_arr.length;
-        var str = "<ul class=list-group>"
-                +"<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
-        for(var i = 0 ; i < size ; i++) {
-            str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
-                +  campus_arr[i]['name']
-                + "</button>";
-        }
-        str += "</ul>";
-        document.getElementById("sidebar-right").innerHTML = str;
+    var size;
+    var str = "<ul class=list-group>"
+            + "<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
+    switch (page)
+    {
+        case 1:
+            size = house_arr.length;
+            for(var i = 0 ; i < size ; i++) {
+                str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
+                    +   "<p>"+house_arr[i]['address']+"</p>"
+                    +   "<p>"+house_arr[i]['type']+"</p>"
+                    +   "<p>"+house_arr[i]['room']+"</p>"
+                    +   "<p>"+house_arr[i]['Yroom']+"</p>"
+                    +   "<p>租金:"+house_arr[i]['rent']+"</p>"
+                    +   "<p>電話:"+ house_arr[i]['telephone']+"</p>"
+                    +   "<p>手機:"+ house_arr[i]['cellphone']+"</p>"
+                    +   "</button>";
+            }
+            str += "</ul>";
+            document.getElementById("house_RSB").innerHTML = str;
+        break;
+        case 2:
+            size = campus_arr.length;
+            for(var i = 0 ; i < size ; i++) {
+                str +=  "<button id=list_"+i+" value="+i+" class=list-group-item>"
+                    +  campus_arr[i]['name']
+                    + "</button>";
+            }
+            str += "</ul>";
+            document.getElementById("campus_RSB").innerHTML = str;
+        break;
+        case 3:
+        break;
 
-        for(var i = 0 ; i < size ; i++) {
-            document.getElementById("list_"+i).addEventListener("click",function(){
-                var k = this.value;
-                // alert(k);
-                map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
-                infoWindow.setContent(createPopUpHtml(k));
-                infoWindow.open(map, markers[k]);
-            });
-        }
+    }
+
+
+    for(var i = 0 ; i < size ; i++) {
+        document.getElementById("list_"+i).addEventListener("click",function(){
+            var k = this.value;
+
+            map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
+            infoWindow.setContent(createPopUpHtml(k));
+            infoWindow.open(map, markers[k]);
+        });
     }
 }
 
