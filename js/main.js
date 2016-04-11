@@ -521,7 +521,7 @@ function housestatistics(cost,type,school) {
             }
         });
     }
-<<<<<<< HEAD
+
 
 function makeRightSB(page) {
     var size = 0;
@@ -608,7 +608,7 @@ function focus(size) {
         }
         break;
     }
-=======
+}
 function Notclassified(School){
 
     var URLs = HousingURL + "api.php?action=houselist&school=" + School;
@@ -640,5 +640,5 @@ function Notclassified(School){
         }
     });
 
->>>>>>> origin/1.4.1
+
 }

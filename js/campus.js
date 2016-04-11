@@ -101,8 +101,7 @@ function RestaurantType(type) {
 function FilterMapCampus(objecjType) {
 
     numbers = objecjType.split(",");
-    var i,j;
-//分離object裡 現金與刷卡的值，使得numbers長度不變。
+    //分離object裡 現金與刷卡的值，使得numbers長度不變。
     var pays = false;
     for(var i =  0 ; i < numbers.length ; i++) {
     if(numbers[i] == 5) {
@@ -172,9 +171,4 @@ for (var i = 0; i < campus_arr.length; i++) {
         for(var k = 0; k < School_arr.length; k++){
             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
         }
-        if(numbers.length == 1) getCampusInfo();
-        else markerCluster = new MarkerClusterer(map, markers);
-    }
-
-
 }
