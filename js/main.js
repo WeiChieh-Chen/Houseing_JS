@@ -255,7 +255,7 @@ function FilterMap(objecjType) {
                         housestatistics(house_arr[i]["rent"],Mapping(numbers[j]),$('#selectArea option:selected').text());
                 }
             }
-        }      
+        }
     }
     else{
         for(var k = 0; k < School_arr.length; k++){
@@ -564,7 +564,7 @@ function makeRightSB(page) {
             console.log("SIZE:"+size);
             for(var i = 0 ; i < size ; i++) {
                 str +=  "<button id=slist_"+i+" value="+i+" class=list-group-item>"
-                    + "<p>地點:" +Crime_arr[i]['Address']+"</p>"                    
+                    + "<p>地點:" +Crime_arr[i]['Address']+"</p>"
                     + "</button>";
             }
             str += "</ul>";
@@ -582,6 +582,7 @@ function focus(size) {
             document.getElementById("hlist_"+i).addEventListener("click",function(){
                 var k = this.value;
                 map.setCenter(new google.maps.LatLng(house_arr[k]['lat'],house_arr[k]['lon']));
+                map.setZoom(18);
                 infoWindow.setContent(createPopUpHtml(k));
                 infoWindow.open(map, markers[k]);
             });
@@ -592,6 +593,7 @@ function focus(size) {
             document.getElementById("clist_"+i).addEventListener("click",function(){
                 var k = this.value;
                 map.setCenter(new google.maps.LatLng(campus_arr[k]['lat'],campus_arr[k]['lon']));
+                map.setZoom(18);
                 infoWindow.setContent(createPopUpHtml(k));
                 infoWindow.open(map, markers[k]);
             });
@@ -602,6 +604,7 @@ function focus(size) {
             document.getElementById("slist_"+i).addEventListener("click",function(){
                 var k = this.value;
                 map.setCenter(new google.maps.LatLng(Crime_arr[k]['lat'],Crime_arr[k]['lng']));
+                map.setZoom(18);
                 infoWindow.setContent(createPopUpHtml(k));
                 infoWindow.open(map, markers[k]);
             });
@@ -618,11 +621,11 @@ function Notclassified(School){
         dataType: 'XML',
         success: function(response) {
 
-            $(response).find("house").each(function(i) { //取得xml父節點 
+            $(response).find("house").each(function(i) { //取得xml父節點
                 housedata[i] = new Array();
                 var total = $(response).find("house").length; //xml的總筆數
                 housedata[i]["type"] = $(this).children("type").text(); // 房屋種類
-                housedata[i]["rent"] = $(this).children("rent").text(); // 租金  
+                housedata[i]["rent"] = $(this).children("rent").text(); // 租金
             });
 
             for (var i = 0; i < housedata.length; i++) {

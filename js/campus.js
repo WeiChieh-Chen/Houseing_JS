@@ -137,7 +137,7 @@ for (var i = 0; i < campus_arr.length; i++) {
                 if(checkPay && checkType) {
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
                     if($('#selectArea option:selected').text() != "不分類"){
-                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());     
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
                     }
                     else{
                         for(var k = 0; k < School_arr.length; k++){
@@ -150,7 +150,7 @@ for (var i = 0; i < campus_arr.length; i++) {
                 if(checkType) {
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
                     if($('#selectArea option:selected').text() != "不分類"){
-                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());     
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
                     }
                     else{
                         for(var k = 0; k < School_arr.length; k++){
@@ -171,4 +171,5 @@ for (var i = 0; i < campus_arr.length; i++) {
         for(var k = 0; k < School_arr.length; k++){
             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
         }
+}
 }
