@@ -1,43 +1,23 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<!DOCTYPE html>
+<html>
+<body>
 
-class Security extends CI_Controller {
-
-
-    public function __construct()
-        {
-            parent::__construct();
-            // Your own constructor code
-        }
-    public function index()
-    {
-        $data['pages'] = 3;
-        $this->load->helper('url');
-        $this->load->view('securities',$data);
-    }
-
-    public function statistics()
-    {
-            $config['hostname'] = '140.130.35.62:8082';
-            $config['username'] = '40343236';
-            $config['password'] = '40343236';
-            $config['database'] = '40343236';
-            $config['dbdriver'] = 'mysqli';
-            $config['dbprefix'] = '';
-            $config['pconnect'] = FALSE;
-            $config['db_debug'] = TRUE;
-
-            $this->load->model('Statistics','',$config);
-
-        $security = array(
-            'kind' => $_POST['kind'],
-            'county' => $_POST['county'],
-            'branchNm' => $_POST['branchNm'],
-
-        );
-        $data['query'] = $this->Statistics->statistics_insert($security);
-
-        $this->load->view('footer');
-    }
-
-}
+<?php 
+    $dbhost = '140.130.35.62:8082';
+    $dbuser = '40343236';
+    $dbpass = '40343236';
+    $dbname = '40343236';
+    $conn = mysql_connect($dbhost, $dbuser, $dbpass) ;//連接資料庫
+    mysql_query("SET NAMES 'utf8'");//設定語系
+    mysql_select_db($dbname);
+    $kind=$_POST['kind'];
+    $county=$_POST['county'];
+    $branchNm=$_POST['branchNm'];
+    $sql = mysql_query("INSERT INTO `housingapp` (kind,county,branchNm) 
+    VALUES ('$kind','$county','$branchNm')");
+?>
+<script>
+    javascript:location.replace('securities.html');
+</script>
+</body>
+</html>

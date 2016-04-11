@@ -251,29 +251,22 @@ function FilterMap(objecjType) {
             if (house_arr[i]["rent"] <= rentValue) {
                 for (var j = 1; j < numbers.length; j++) {
                     if (house_arr[i]["type"] == Mapping(numbers[j]))
+                        createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
                         housestatistics(house_arr[i]["rent"],Mapping(numbers[j]),$('#selectArea option:selected').text());
                 }
             }
-        }
+        }      
     }
     else{
         for(var k = 0; k < School_arr.length; k++){
-            for (var i = 0; i < house_arr.length; i++) {
-                if (house_arr[i]["rent"] <= rentValue) {
-                    for (var j = 1; j < numbers.length; j++) {
-                        if (house_arr[i]["type"] == Mapping(numbers[j]))
-                            housestatistics(house_arr[i]["rent"],Mapping(numbers[j]),School_arr[k]['cname']);
-                    }
-                }
-            }
+            Notclassified(School_arr[i]["ename"]);
         }
-    }
-
-    for (var i = 0; i < house_arr.length; i++) {
-        if (house_arr[i]["rent"] <= rentValue) {
-            for (var j = 1; j < numbers.length; j++) {
-                if (house_arr[i]["type"] == Mapping(numbers[j]))
-                    createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
+        for (var i = 0; i < house_arr.length; i++) {
+            if (house_arr[i]["rent"] <= rentValue) {
+                for (var j = 1; j < numbers.length; j++) {
+                    if (house_arr[i]["type"] == Mapping(numbers[j]))
+                        createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
+                }
             }
         }
     }
@@ -403,7 +396,7 @@ function Add_ObjectType(tagId, typename) {
  *************************************************/
 function housestatistics(cost,type,school) {
     console.log("work");
-        var URL = "welcome/statistics";
+        var URL = 'Welcome.php';
 
         var dataText =
         {
@@ -421,7 +414,7 @@ function housestatistics(cost,type,school) {
             url:URL,
             cache: false,
             data:dataText,
-            dataType:'text',
+            dataType:'html',
             type:"POST",
 
             success: function(response)
@@ -440,7 +433,7 @@ function housestatistics(cost,type,school) {
 
     }
     function campusstatistics(pay,type,school) {
-            var URL = "campus/statistics"
+            var URL = 'Campus.php'
             if(pay == "刷卡"){
                 var dataText =
                 {
@@ -471,7 +464,7 @@ function housestatistics(cost,type,school) {
                 url:URL,
                 cache: false,
                 data:dataText,
-                dataType:'text',
+                dataType:'html',
                 type:"POST",
                 success: function(response)
                 {
@@ -488,7 +481,7 @@ function housestatistics(cost,type,school) {
             });
         }
     function securitystatistics(branchNm) {
-        var URL = "security/statistics";
+        var URL = 'Security.php';
         if($('#selectArea option:selected ').text() == "不分類"){
             var dataText =
             {
@@ -514,7 +507,7 @@ function housestatistics(cost,type,school) {
             url:URL,
             cache: false,
             data:dataText,
-            dataType:'text',
+            dataType:'html',
             type:"POST",
             success: function(response)
             {
@@ -528,6 +521,7 @@ function housestatistics(cost,type,school) {
             }
         });
     }
+<<<<<<< HEAD
 
 function makeRightSB(page) {
     var size = 0;
@@ -614,4 +608,37 @@ function focus(size) {
         }
         break;
     }
+=======
+function Notclassified(School){
+
+    var URLs = HousingURL + "api.php?action=houselist&school=" + School;
+    var housedata = new Array();
+    $.ajax({
+        url: URLs,
+        dataType: 'XML',
+        success: function(response) {
+
+            $(response).find("house").each(function(i) { //取得xml父節點 
+                housedata[i] = new Array();
+                var total = $(response).find("house").length; //xml的總筆數
+                housedata[i]["type"] = $(this).children("type").text(); // 房屋種類
+                housedata[i]["rent"] = $(this).children("rent").text(); // 租金  
+            });
+
+            for (var i = 0; i < housedata.length; i++) {
+                if (housedata[i]["rent"] <= rentValue) {
+                    for (var j = 1; j < numbers.length; j++) {
+                        if (housedata[i]["type"] == Mapping(numbers[j]))
+                            housestatistics(housedata[i]["rent"],Mapping(numbers[j]),School_arr[k]['cname']);
+                    }
+                }
+            }
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert("getSchoolInfo , error ! ");
+        }
+    });
+
+>>>>>>> origin/1.4.1
 }

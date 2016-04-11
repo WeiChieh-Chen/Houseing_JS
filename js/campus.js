@@ -101,10 +101,10 @@ function RestaurantType(type) {
 function FilterMapCampus(objecjType) {
 
     numbers = objecjType.split(",");
-    console.log(numbers);
+    var i,j;
 //分離object裡 現金與刷卡的值，使得numbers長度不變。
-var pays = false;
-for(var i = 0 ; i < numbers.length ; i++) {
+    var pays = false;
+    for(var i =  0 ; i < numbers.length ; i++) {
     if(numbers[i] == 5) {
         pays = true;
         delete numbers[i];
@@ -137,11 +137,27 @@ for (var i = 0; i < campus_arr.length; i++) {
             if(pays) {
                 if(checkPay && checkType) {
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
+                    if($('#selectArea option:selected').text() != "不分類"){
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());     
+                    }
+                    else{
+                        for(var k = 0; k < School_arr.length; k++){
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
+                        }
+                    }
                 }
             }
             else {
                 if(checkType) {
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
+                    if($('#selectArea option:selected').text() != "不分類"){
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());     
+                    }
+                    else{
+                        for(var k = 0; k < School_arr.length; k++){
+                            campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
+                        }
+                    }
                 }
             }
         }
@@ -156,6 +172,8 @@ for (var i = 0; i < campus_arr.length; i++) {
         for(var k = 0; k < School_arr.length; k++){
             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
         }
+        if(numbers.length == 1) getCampusInfo();
+        else markerCluster = new MarkerClusterer(map, markers);
     }
 
 
