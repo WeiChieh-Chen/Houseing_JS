@@ -24,6 +24,7 @@ var houseNo;
 var Find_Schools_lat = 0;
 var Find_Schools_lon = 0;
 
+var recId = new Array;
 /* 連動Select */
 //house_tpye1
 $(document).ready(function() {
@@ -235,6 +236,8 @@ function FilterMap(objecjType) {
     //     console.log("roomType");
     // }
 
+    recId = [];
+
     numbers = objecjType.split(",");
 
 
@@ -250,8 +253,10 @@ function FilterMap(objecjType) {
         for (var i = 0; i < house_arr.length; i++) {
             if (house_arr[i]["rent"] <= rentValue) {
                 for (var j = 1; j < numbers.length; j++) {
-                    if (house_arr[i]["type"] == Mapping(numbers[j]))
+                    if (house_arr[i]["type"] == Mapping(numbers[j])){
+                        recId.push(i);
                         createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
+                    }
                         housestatistics(house_arr[i]["rent"],Mapping(numbers[j]),$('#selectArea option:selected').text());
                 }
             }
@@ -265,6 +270,7 @@ function FilterMap(objecjType) {
             if (house_arr[i]["rent"] <= rentValue) {
                 for (var j = 1; j < numbers.length; j++) {
                     if (house_arr[i]["type"] == Mapping(numbers[j]))
+                        recId.push(i);
                         createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
                 }
             }
@@ -272,6 +278,8 @@ function FilterMap(objecjType) {
     }
     if(numbers.length == 1) getSchoolInfo();
     else markerCluster = new MarkerClusterer(map, markers);
+
+    makeRightSB(pages);
 }
 
 function createMarkers(houseiD, address, lat, lon) {
@@ -529,16 +537,16 @@ function makeRightSB(page) {
     switch (page)
     {
         case 1:
-            size = house_arr.length;
+            size = recId.length;
             for(var i = 0 ; i < size ; i++) {
                 str +=  "<button id=hlist_"+i+" value="+i+" class=list-group-item>"
-                    +   "<p>"+house_arr[i]['address']+"</p>"
-                    +   "<p>"+house_arr[i]['type']+"</p>"
-                    +   "<p>"+house_arr[i]['room']+"</p>"
-                    +   "<p>"+house_arr[i]['Yroom']+"</p>"
-                    +   "<p>租金:"+house_arr[i]['rent']+"</p>"
-                    +   "<p>電話:"+ house_arr[i]['telephone']+"</p>"
-                    +   "<p>手機:"+ house_arr[i]['cellphone']+"</p>"
+                    +   "<p>"+house_arr[recId[i]]['address']+"</p>"
+                    +   "<p>"+house_arr[recId[i]]['type']+"</p>"
+                    +   "<p>"+house_arr[recId[i]]['room']+"</p>"
+                    +   "<p>"+house_arr[recId[i]]['Yroom']+"</p>"
+                    +   "<p>租金:"+house_arr[recId[i]]['rent']+"</p>"
+                    +   "<p>電話:"+ house_arr[recId[i]]['telephone']+"</p>"
+                    +   "<p>手機:"+ house_arr[recId[i]]['cellphone']+"</p>"
                     +   "</button>";
             }
             str += "</ul>";
@@ -546,12 +554,13 @@ function makeRightSB(page) {
             focus(size);
         break;
         case 2:
-            size = campus_arr.length;
+            size = recId.length;
             str = "<ul class=list-group>"
                 + "<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
             for(var i = 0 ; i < size ; i++) {
+                console.log(recId[i]);
                 str +=  "<button id=clist_"+i+" value="+i+" class=list-group-item>"
-                    +  campus_arr[i]['name']
+                    +  campus_arr[recId[i]]['name']
                     + "</button>";
             }
             str += "</ul>";

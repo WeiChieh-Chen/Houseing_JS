@@ -99,7 +99,7 @@ function RestaurantType(type) {
 }
 
 function FilterMapCampus(objecjType) {
-
+    recId = [];
     numbers = objecjType.split(",");
     //分離object裡 現金與刷卡的值，使得numbers長度不變。
     var pays = false;
@@ -135,12 +135,14 @@ for (var i = 0; i < campus_arr.length; i++) {
 
             if(pays) {
                 if(checkPay && checkType) {
+                    recId.push(i);
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
                     if($('#selectArea option:selected').text() != "不分類"){
                             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
                     }
                     else{
                         for(var k = 0; k < School_arr.length; k++){
+                            recId.push(k);
                             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
                         }
                     }
@@ -148,12 +150,14 @@ for (var i = 0; i < campus_arr.length; i++) {
             }
             else {
                 if(checkType) {
+                    recId.push(i);
                     createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
                     if($('#selectArea option:selected').text() != "不分類"){
                             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
                     }
                     else{
                         for(var k = 0; k < School_arr.length; k++){
+                            recId.push(k);
                             campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),School_arr[k]['cname']);
                         }
                     }
@@ -164,6 +168,7 @@ for (var i = 0; i < campus_arr.length; i++) {
     if(numbers.length == 1) getCampusInfo();
     else markerCluster = new MarkerClusterer(map, markers);
 
+    makeRightSB(pages);
     if($('#selectArea option:selected').text() != "不分類"){
         campusstatistics(campus_arr[i]["pay"],RestaurantType(numbers[j]),$('#selectArea option:selected').text());
     }

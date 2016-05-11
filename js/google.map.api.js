@@ -63,11 +63,11 @@ function getPOIjson(CityID){
     //             alert("未查詢到任何東西@@~");
     //         }
     //     },
-    //     error:function(xhr, ajaxOptions, thrownError){ 
-    //        // alert("發生未知錯誤拉拉拉!!"); 
+    //     error:function(xhr, ajaxOptions, thrownError){
+    //        // alert("發生未知錯誤拉拉拉!!");
     //     }
     // })
-}   
+}
 function inputPOItoMap(map,POIs,name){
     if(markerCluster){
         deleteMarkers();
@@ -123,7 +123,7 @@ function createPopUpHtml(POI,name){
         +"<button class='btn btn-primary' href='"+site_path+name+"/modal_info/"+POI['id']+"' data-toggle='modal' data-target='#myModal'>詳細資訊</button>"
         +"<button class='btn btn-primary' onclick='createdirections("+POI['lat']+","+POI['lon']+");'>導航</button>"
         +"</div>";
-    else 
+    else
         return "<div class='MarkerPopUp'><div class='MarkerTitle'>"+POI['name']+"</div>"
         +"<div class='MarkerContext'>"+POI['address']+"</div>"
         +"<div class='rating-static rating-"+POI['evaluate']+"'></div>"
@@ -234,7 +234,7 @@ function canceldirections(){
   if(directionspolyline){
     directionspolyline.setMap(null);
   }
-} 
+}
 /*GeoLocation
 ***********************************************/
   if(navigator.geolocation) {
@@ -290,7 +290,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             minLat=Math.min(POI.lat,minLat);
 
         }
-        
+
         var bounds = new google.maps.LatLngBounds(
             new google.maps.LatLng(maxLat,minLon),
             new google.maps.LatLng(minLat,maxLon )
