@@ -1,4 +1,4 @@
-//var site_path=location.origin+"/bikelife/bikebook/";
+﻿//var site_path=location.origin+"/bikelife/bikebook/";
 /* google map modal remove data */
 $(document.body).on('hidden.bs.modal', function() {
     $('#myModal').removeData('bs.modal')
@@ -9,6 +9,7 @@ $(document).ready(function() {
         $('.row-offcanvas').toggleClass('active');
     });
 });
+
 
 var HousingURL = "http://140.130.34.31/";
 
