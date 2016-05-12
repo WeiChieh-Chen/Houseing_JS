@@ -67,11 +67,22 @@ function loadingCampusData(URLs,School,cschool){
                 }
 
 
-                if (campus_arr.length == 0) {
-                    alert("目前此地暫無資料");
-                    console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
+                if(tmp != 0) {
+                    if (campusdata.length == 0) {
+                        alert(School_arr[tmp]['cname']+"暫無資料");
+                        console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
+                    } else {
+                        SetMap(campus_arr[tmp]["lat"], campus_arr[tmp]["lon"]);
+                    }
                 } else {
-                    SetMap(School_arr[tmp]["lat"], School_arr[tmp]["lon"]);
+                    for(var i = 0 ;i < campus_arr.length ; i++) {
+                        if (campus_arr.length == 0) {
+                            alert(School_arr[tmp]['cname']+"暫無資料");
+                            console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
+                        }else {
+                            SetMap(campus_arr[i]["lat"], campus_arr[i]["lon"]);
+                        }
+                    }
                 }
 
 
@@ -113,7 +124,7 @@ map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 stepDisplay = new google.maps.InfoWindow();
 
 if (campus_arr.length == 0) {
-    alert("目前此地暫無資料");
+    alert(School_arr[tmp]['cname']+"暫無資料");
     console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
 }
 
