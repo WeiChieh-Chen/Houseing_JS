@@ -5,10 +5,6 @@ var security_count=0;
 var Crime_count = 0;
 if (pages == 3) {
 
-
-
-
-
 var comp=new Array;
 var addr_arr = new Array;
 var Latlng_arr = new Array;
@@ -40,9 +36,9 @@ $(document).ready(function() {
 
                 console.log(URLs);
                 arr_count=0;
-                if (CNo != "0") 
+                if (CNo != "0")
                 {
-                    $('#selectToggle').attr('disabled', false);   
+                    $('#selectToggle').attr('disabled', false);
 
                     $.ajax({
                         url:"public/datus.json",
@@ -52,15 +48,15 @@ $(document).ready(function() {
 
                         success:function(result){
                             $(result).each(function(i){
-                                
+
                                 if( result[i].Address.match(CCity) )
-                                { 
+                                {
                                     addr_arr[arr_count]=new Array();
-                                    
+
                                     addr_arr[arr_count]['Address']=result[i].Address;
                                     addr_arr[arr_count]['DeptNm'] = result[i].DeptNm;
                                     addr_arr[arr_count++]['BranchNm']=result[i].BranchNm;
-                                
+
                                 }
 
                             })
@@ -73,7 +69,7 @@ $(document).ready(function() {
                         }
                     })
                 }
-                else 
+                else
                 {
                     $('#selectToggle').attr('disabled', true);
                     $('#selectArea').html("<option value=''>請先選擇城市</option>");
@@ -92,11 +88,11 @@ function GetBranch(count)//做分局的部分。並去除重複部分
 {
     glo_count = count;
     var compare;
-    
+
     var val=0;
     var flag = true;
     comp[0]="";
-    
+
     var strHtml = "<option value='0'>" + "不分類" + "</option>";
     for(var i = 0 ; i < count ; i++)
     {
@@ -117,7 +113,7 @@ function GetBranch(count)//做分局的部分。並去除重複部分
         else
         {
             flag = true;
-        }       
+        }
     }
     police_count = val;
     $('#selectArea').html(strHtml);
@@ -133,13 +129,13 @@ function Getlatlng()
     var branch = $('#selectArea option:selected ').text();
     console.log(branch);
     var val=0;
-    
+
     for(var j = 0 ; j < glo_count ; j++){
         if(addr_arr[j]['BranchNm'].match(branch)){
             Latlng_arr[val] = new Array();
             console.log(addr_arr[j]['Address']);
             Latlng_arr[val]['DeptNm'] = addr_arr[j]['DeptNm'];
-            Latlng_arr[val++]['Address'] = addr_arr[j]['Address']; 
+            Latlng_arr[val++]['Address'] = addr_arr[j]['Address'];
         }else if(branch == "不分類")
         {
             Latlng_arr[val] = new Array();
@@ -164,11 +160,11 @@ function Getlatlng()
                     if( result[i].Address.match(Latlng_arr[x]['Address']) ){
                         SetPopMap(result[i].Address,result[i].Lat,result[i].Lng,false);
                         CrimeSave(result[i].Address,result[i].Lat,result[i].Lng);
-                       
+
                     }
                 }
             })
-                
+
         },
         error:function() {
             console.log("Not found!!!");
@@ -190,36 +186,36 @@ function Getlatlng()
                             if( result[i].BranchNm==Latlng_arr[x]['BranchNm'] ){
                                 console.log(result[i].BranchNm);
                                 dept = Latlng_arr[0]['DeptNm'];
-                                
+
                                 SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
                                 Latlng_arr[x]['BranchNm'] ="0";//讓上面if不會重複判斷同個分局
-                                BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,false);  
+                                BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,false);
                                 break;
                             }
                         }
                     }else if( result[i].BranchNm==branch){
                         console.log("result ="+result[i].BranchNm);
                         dept = Latlng_arr[0]['DeptNm'];
-                        
+
                         SetPopMap(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
-                        BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,true);                   
+                        BranchSave(result[i].BranchNm,result[i].Lat,result[i].Lng,true);
                     }
-                        
-                                     
+
+
                 })
-                    
+
             },
             error:function() {
                 console.log("Not found!!!");
             }
         });
-        
+
         $(function(){
         setTimeout(function(){
          makeRightSB(pages);
         },500)
         })
-   
+
 }
 
 function BranchSave(bran,lat,lng,branch_flag)
@@ -239,7 +235,7 @@ function BranchSave(bran,lat,lng,branch_flag)
         Branch_arr[security_count++]['Branch_lng']=lng;
     }
 
-    
+
 }
 
 
@@ -251,13 +247,13 @@ function CrimeSave(Address,lat,lng)
     Crime_arr[Crime_count]['Address'] = Address;
     Crime_arr[Crime_count]['lat'] = lat;
     Crime_arr[Crime_count++]['lng'] = lng;
-    
+
 
 }
 
 function SetPopMap(addr,s_lat, s_lon,po) {
-   
-    
+
+
     console.log("lat = " + s_lat + ", lon = " + s_lon + " flag =" + po);
     if(po)
     {
@@ -274,7 +270,7 @@ function SetPopMap(addr,s_lat, s_lon,po) {
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     createPopMarkers(addr,s_lat,s_lon,po);
     stepDisplay = new google.maps.InfoWindow();
-    
+
     markerCluster = new MarkerClusterer(map, markers);
 
 }
@@ -297,7 +293,7 @@ function createPopMarkers( address,lat, lon,po) {
     });
 
     }
-    
+
     //標記資訊視窗點擊事件
     if(po)
     {

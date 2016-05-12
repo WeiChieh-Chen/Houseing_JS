@@ -193,6 +193,7 @@ function SetMap(s_lat, s_lon) {
     if (markerCluster) {
         deleteMarkers();
     }
+
     console.log("lat = " + s_lat + ", lon = " + s_lon);
 
     var mapOptions = {
@@ -206,13 +207,17 @@ function SetMap(s_lat, s_lon) {
 
     var rentValue = parseInt($('#rentBar').val());
 
-    for (var i = 0; i < house_arr.length; i++) {
+    if(pages == 1) {
+        for (var i = 0; i < house_arr.length; i++) {
         if (house_arr[i]["rent"] <= rentValue) //篩選租金
+            recId.push(i);
             createMarkers(i, house_arr[i]["address"], house_arr[i]["lat"], house_arr[i]["lon"]);
-    }
-
-    for (var i = 0; i < campus_arr.length; i++) {
+        }
+    }else if(pages == 2){
+        for (var i = 0; i < campus_arr.length; i++) {
+            recId.push(i);
             createMarkers(i, campus_arr[i]["address"], campus_arr[i]["lat"], campus_arr[i]["lon"]);
+        }
     }
 
     markerCluster = new MarkerClusterer(map, markers);
@@ -242,7 +247,7 @@ function FilterMap(objecjType) {
     numbers = objecjType.split(",");
 
 
-    if (markerCluster) deleteMarkers();
+    // if (markerCluster) deleteMarkers();
     var mapOptions = {
         zoom: 15,
         center: new google.maps.LatLng(Find_Schools_lat, Find_Schools_lon)
@@ -278,7 +283,7 @@ function FilterMap(objecjType) {
         }
     }
     if(numbers.length == 1) getSchoolInfo();
-    else markerCluster = new MarkerClusterer(map, markers);
+    // else markerCluster = new MarkerClusterer(map, markers);
 
     makeRightSB(pages);
 }
@@ -556,10 +561,11 @@ function makeRightSB(page) {
         break;
         case 2:
             size = recId.length;
+            console.log(recId);
             str = "<ul class=list-group>"
                 + "<button id=list class=list-group-item>"+School_arr[tmp]['cname']+"</button>";
             for(var i = 0 ; i < size ; i++) {
-                console.log(recId[i]);
+
                 str +=  "<button id=clist_"+i+" value="+i+" class=list-group-item>"
                     +  campus_arr[recId[i]]['name']
                     + "</button>";
