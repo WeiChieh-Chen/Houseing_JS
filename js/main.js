@@ -165,7 +165,7 @@ function loadingHousingData(URLs,School,cschool){
                 }
                 SetMap(School_arr[tmp]["lat"], School_arr[tmp]["lon"]);
                 if (housedata.length == 0) {
-                    //alert("資料庫沒有內容");
+                    alert(School_arr[tmp]['cname']+"暫無內容");
                     console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
                 }
                 makeRightSB(pages);

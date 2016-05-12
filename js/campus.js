@@ -1,4 +1,4 @@
-/*
+﻿/*
     Function Name : getCampusInfo()
     Function Work : 取得e點靈資料
 
@@ -8,10 +8,14 @@ function getCampusInfo() {
     //alert('(σ" 。 。)σ');
     var School = document.getElementById("selectArea").value;
     var URLs = HousingURL + "api.php?action=restaurantlist&school=";
+
+    recId = [];//用來存放正確物件的索引
+
     if (School != "0"){
         URLs = URLs + School;
         loadingCampusData(URLs,School,$('#selectArea option:selected').text());
     }else {
+
         for (var i = 0 ; i < School_arr.length ; i++){
             loadingCampusData(URLs+School_arr[i]["ename"],School_arr[i]["ename"],School_arr[i]["cname"]);
         }
@@ -51,7 +55,7 @@ function loadingCampusData(URLs,School,cschool){
                     campus_arr = campusdata;
 
                 });
-                
+
 
                 var tmp = 0;
                 for (var i = 0; i < School_arr.length; i++) {
@@ -62,31 +66,20 @@ function loadingCampusData(URLs,School,cschool){
                     }
                 }
 
-                //可在沒學校的情況下就搜尋
-                if(tmp != 0) {
-                    if (campusdata.length == 0) {
-                        alert("目前此地暫無資料");
-                        console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
-                    } else {
-                        SetMap(campus_arr[tmp]["lat"], campus_arr[tmp]["lon"]);
-                    }
+
+                if (campus_arr.length == 0) {
+                    alert("目前此地暫無資料");
+                    console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
                 } else {
-                    for(var i = 0 ;i < campus_arr.length ; i++) {
-                        if (campus_arr.length == 0) {
-                            alert("目前此地暫無資料");
-                            console.log(School_arr[tmp]['cname']+ " -> 資料庫沒有內容");
-                        }else {
-                            SetMap(campus_arr[i]["lat"], campus_arr[i]["lon"]);
-                        }
-                    }
+                    SetMap(School_arr[tmp]["lat"], School_arr[tmp]["lon"]);
                 }
+
 
                 makeRightSB(pages);
             },
             error: function(xhr, ajaxOptions, thrownError) {
                 alert("getCampusInfo , error ! ");
             }
-
         });
 }
 
