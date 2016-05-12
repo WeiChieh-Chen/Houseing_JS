@@ -247,7 +247,7 @@ function FilterMap(objecjType) {
     numbers = objecjType.split(",");
 
 
-    // if (markerCluster) deleteMarkers();
+    if (markerCluster) deleteMarkers();
     var mapOptions = {
         zoom: 15,
         center: new google.maps.LatLng(Find_Schools_lat, Find_Schools_lon)
@@ -283,7 +283,7 @@ function FilterMap(objecjType) {
         }
     }
     if(numbers.length == 1) getSchoolInfo();
-    // else markerCluster = new MarkerClusterer(map, markers);
+    else markerCluster = new MarkerClusterer(map, markers);
 
     makeRightSB(pages);
 }

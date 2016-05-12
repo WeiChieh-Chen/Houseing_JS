@@ -3,8 +3,6 @@ var Branch_arr = new Array;
 var Crime_arr = new Array;
 var security_count=0;
 var Crime_count = 0;
-if (pages == 3) {
-
 var comp=new Array;
 var addr_arr = new Array;
 var Latlng_arr = new Array;
@@ -13,7 +11,6 @@ var arr_count;
 var CCity;
 var glo_count;
 var police_count;
-
 var dept;
 
 
@@ -81,7 +78,7 @@ $(document).ready(function() {
         });
     });
 });
-}
+
 
 
 function GetBranch(count)//做分局的部分。並去除重複部分
